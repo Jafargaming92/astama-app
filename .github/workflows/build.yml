@@ -1,0 +1,27 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build with Buildozer
+        uses: ArtemS-G/buildozer-action@v1.2.0
+        with:
+          command: buildozer -v android debug
+          buildozer_version: master
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: AstamaMusic-APK
+          path: bin/*.apk
+          
